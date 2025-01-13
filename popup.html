@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/popup.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <i class="fab fa-github"></i>
+          LeetCode Sync
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="status-row">
+          <span class="status-label">GitHub Connection:</span>
+          <span class="status-value connected">
+            Connected
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+
+        <button class="btn btn-primary" id="sync-now">
+          <i class="fas fa-sync-alt"></i>
+          Sync Now
+        </button>
+
+        <div class="last-sync">Last synced: Today, 2:30 PM</div>
+
+        <button class="btn btn-secondary">
+          <i class="fas fa-cog"></i>
+          <span><a href="options.html">Settings</a></span>
+        </button>
+
+        <div class="repo-info">
+          <span id="repo-display">Syncing to: username/leetcode-solutions</span>
+          <br />
+          Branch: main
+        </div>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leetcode GitHub Sync - Options</title>
+    <link rel="stylesheet" href="styles/options.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h2>Configuration Settings</h2>
+    <form id="config-form">
+      <!-- GitHub Repository URL Input -->
+      <label for="repo-url">GitHub Repository URL:</label>
+      <input
+        type="text"
+        id="repo-url"
+        name="repo-url"
+        required
+        placeholder="https://github.com/username/repository"
+      />
+
+      <!-- GitHub Personal Access Token Input -->
+      <label for="github-token">GitHub Personal Access Token:</label>
+      <input
+        type="password"
+        id="github-token"
+        name="github-token"
+        required
+        placeholder="ghp_YourPersonalAccessToken"
+      />
+
+      <!-- Save Button -->
+      <button type="submit">Save</button>
+    </form>
+
+    <!-- Status Message Display -->
+    <div id="status"></div>
+
+    <!-- Linking to the Options JavaScript -->
+    <script src="options.js"></script>
+  </body>
+</html>

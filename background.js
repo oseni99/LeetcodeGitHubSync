@@ -80,14 +80,14 @@ function getFileExtension(language) {
 
 function updateSyncStatus(status) {
     chrome.storage.sync.set({ syncStatus: status }, () => {
-        console.log(`Sync status updated to: ${status}`);
+        // // // console.log(`Sync status updated to: ${status}`);
     });
 }
 
 function updateLastSyncTime() {
     const now = new Date().toISOString();
     chrome.storage.sync.set({ lastSyncTime: now }, () => {
-        console.log(`Last sync time updated to: ${now}`);
+        // // console.log(`Last sync time updated to: ${now}`);
     });
 }
 
@@ -169,7 +169,7 @@ async function handleNewSubmission(submissionData) {
     if (!owner || !repo) {
         throw new Error('Invalid GitHub repository URL.');
     }
-    console.log("RECEIVED SUBMISSION DATA", submissionData)
+    // console.log("RECEIVED SUBMISSION DATA", submissionData)
     // TODO: ADD TIMESTAMP LATER IF NEED BE
     const { submissionId, questionId, questionTitle, language, solutionCode } = submissionData;
     // Construct file name
@@ -184,7 +184,7 @@ async function handleNewSubmission(submissionData) {
     } catch (error) {
         if (error.message === "File not found") {
             //  if no file exists it goes ahead to create that file 
-            console.log(`File ${fileName} not found. It will now be created`)
+            // console.log(`File ${fileName} not found. It will now be created`)
         } else {
             throw new Error("Error fetching file from GitHub")
         }
@@ -203,7 +203,7 @@ async function handleNewSubmission(submissionData) {
         const existingContent = atob(existingFile.content);
         // trim the contents so i dont miss anything 
         if (existingContent.trim() == solutionCode.trim()) {
-            console.log(`No changes detected for ${fileName}. Sync skipped.`);
+            // console.log(`No changes detected for ${fileName}. Sync skipped.`);
             return {
                 message: `No changes detected for ${fileName}. Sync skipped.`,
                 type: 'info'
@@ -281,7 +281,7 @@ async function fetchLatestSubmission() {
         }
         const data = await response.json();
         // TODO debugging purposes -> remove later on 
-        console.log("Submission Data:", data)
+        // console.log("Submission Data:", data)
 
         if (Array.isArray(data.submissions_dump) && data.submissions_dump.length > 0) {
             const latest = data.submissions_dump[0]
@@ -295,12 +295,12 @@ async function fetchLatestSubmission() {
             };
             return structuredData;
         } else {
-            console.log("No submissions found");
+            // console.log("No submissions found");
             return null;
         }
     }
     catch (error) {
-        console.log("Error fetching latest submission:", error);
+        // console.log("Error fetching latest submission:", error);
         return null;
     }
 }
@@ -318,12 +318,12 @@ async function getLastSyncedSubmissionId() {
 async function processLatestSubmission() {
     // This isFetching is used because of that mutation observer i have in there to check and not repeat 
     if (isFetching) {
-        console.log("Fetch is already in progress. Skipping this interval");
+        // console.log("Fetch is already in progress. Skipping this interval");
         return;
     }
     // now set isFetching to true 
     isFetching = true
-    console.log("Fetching the latest submission....")
+    // console.log("Fetching the latest submission....")
     try {
         // fetch that latest submission 
         const latestSubmission = await fetchLatestSubmission();
@@ -331,10 +331,10 @@ async function processLatestSubmission() {
         if (!latestSubmission) return;
         const lastSyncedId = await getLastSyncedSubmissionId();
         // if that latest submission is there def will be submission ID 
-        console.log(`Last Synced Submission ID: ${lastSyncedId}`);
+        // console.log(`Last Synced Submission ID: ${lastSyncedId}`);
         // if the last synced submission ID === current submission ID nothing needs to happen even though additional check is done on content side at github
         if (latestSubmission.submissionId === lastSyncedId) {
-            console.log("No new submissions to sync");
+            // console.log("No new submissions to sync");
             return;
         }
 
@@ -344,19 +344,19 @@ async function processLatestSubmission() {
             { action: 'newSubmission', data: latestSubmission },
             async (response) => {
                 if (chrome.runtime.lastError) {
-                    console.error('Error sending message:', chrome.runtime.lastError);
+                    // console.error('Error sending message:', chrome.runtime.lastError);
                 } else {
-                    console.log('Background script response:', response);
+                    // console.log('Background script response:', response);
                     if (response && response.status === 'success') {
                         // Update that last synced submission ID
                         await setLastSyncedSubmissionId(latestSubmission.submissionId);
-                        console.log('Updated last synced submission ID.');
+                        // console.log('Updated last synced submission ID.');
                     }
                 }
             }
         );
     } catch (error) {
-        console.error("Error processing submission:", error)
+        // console.error("Error processing submission:", error)
     } finally {
         isFetching = false
     }
@@ -375,11 +375,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.action === "manualSync" && !request.data) {
             manualSync()
                 .then((status) => {
-                    console.log("Manual sync successful:", status.message);
+                    // console.log("Manual sync successful:", status.message);
                     sendResponse({ status: status.message, type: status.type });
                 })
                 .catch((error) => {
-                    console.error("Manual sync error:", error.message);
+                    // console.error("Manual sync error:", error.message);
                     sendResponse({ status: error.message, type: 'error' });
                 })
         } else {

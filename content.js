@@ -31,7 +31,7 @@ async function fetchLatestSubmission() {
         }
         const data = await response.json();
         // TODO debugging purposes -> remove later on 
-        console.log("Submission Data:", data)
+        // console.log("Submission Data:", data)
 
         if (Array.isArray(data.submissions_dump) && data.submissions_dump.length > 0) {
             const latest = data.submissions_dump[0]
@@ -45,12 +45,12 @@ async function fetchLatestSubmission() {
             };
             return structuredData;
         } else {
-            console.log("No submissions found");
+            // console.log("No submissions found");
             return null;
         }
     }
     catch (error) {
-        console.log("Error fetching latest submission:", error);
+        // console.log("Error fetching latest submission:", error);
         return null;
     }
 }
@@ -88,12 +88,12 @@ async function setLastSyncedSubmissionId(submissionId) {
 async function processLatestSubmission() {
     // This isFetching is used because of that mutation observer i have in there to check and not repeat 
     if (isFetching) {
-        console.log("Fetch is already in progress. Skipping this interval");
+        // console.log("Fetch is already in progress. Skipping this interval");
         return;
     }
     // now set isFetching to true 
     isFetching = true
-    console.log("Fetching the latest submission....")
+    // console.log("Fetching the latest submission....")
     try {
         // fetch that latest submission 
         const latestSubmission = await fetchLatestSubmission();
@@ -101,10 +101,10 @@ async function processLatestSubmission() {
         if (!latestSubmission) return;
         const lastSyncedId = await getLastSyncedSubmissionId();
         // if that latest submission is there def will be submission ID 
-        console.log(`Last Synced Submission ID: ${lastSyncedId}`);
+        // console.log(`Last Synced Submission ID: ${lastSyncedId}`);
         // if the last synced submission ID === current submission ID nothing needs to happen even though additional check is done on content side at github
         if (latestSubmission.submissionId === lastSyncedId) {
-            console.log("No new submissions to sync");
+            // console.log("No new submissions to sync");
             return;
         }
 
@@ -114,19 +114,19 @@ async function processLatestSubmission() {
             { action: 'newSubmission', data: latestSubmission },
             async (response) => {
                 if (chrome.runtime.lastError) {
-                    console.error('Error sending message:', chrome.runtime.lastError);
+                    // console.error('Error sending message:', chrome.runtime.lastError);
                 } else {
-                    console.log('Background script response:', response);
+                    // console.log('Background script response:', response);
                     if (response && response.status === 'success') {
                         // Update that last synced submission ID
                         await setLastSyncedSubmissionId(latestSubmission.submissionId);
-                        console.log('Updated last synced submission ID.');
+                        // console.log('Updated last synced submission ID.');
                     }
                 }
             }
         );
     } catch (error) {
-        console.error("Error processing submission:", error)
+        // console.error("Error processing submission:", error)
     } finally {
         isFetching = false
     }
@@ -148,14 +148,14 @@ function setupMutationObserver() {
     const observer = new MutationObserver((mutationsList) => {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                console.log('New submission detected via MutationObserver.');
+                // console.log('New submission detected via MutationObserver.');
                 processLatestSubmission();
             }
         }
     });
 
     observer.observe(submissionsTableBody, { childList: true, subtree: true });
-    console.log('MutationObserver set up to monitor new submissions.');
+    // console.log('MutationObserver set up to monitor new submissions.');
 }
 
 /**
@@ -168,7 +168,7 @@ function initializePeriodicFetching() {
 
     // scheduling the intervals to make it periodic
     setInterval(processLatestSubmission, FETCH_INTERVAL);
-    console.log(`Periodic fetching set to every ${FETCH_INTERVAL / 60000} minutes`);
+    // console.log(`Periodic fetching set to every ${FETCH_INTERVAL / 60000} minutes`);
 }
 
 /**

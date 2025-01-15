@@ -9,14 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.sync.get(["repoUrl"], (result) => {
         const repoUrl = result.repoUrl || "Not Set";
         document.getElementById("repo-display").textContent = repoUrl
-        console.log("Retrieved from storage:", result)
+        // console.log("Retrieved from storage:", result)
     })
 })
 
 document.getElementById("sync-now").addEventListener("click", async () => {
     // i now want when i click this it sends message to that background js to run the sync 
     chrome.runtime.sendMessage({ action: "manualSync" }, (response) => {
-        console.log("Manual sync response:", response);
+        // console.log("Manual sync response:", response);
 
     });
 })

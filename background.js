@@ -59,6 +59,16 @@ function getFileExtension(language) {
         'JavaScript': 'js',
         'C#': 'cs',
         'Ruby': 'rb',
+        'Go': 'go',
+        'C': 'c',
+        'Swift': 'swift',
+        'Rust': 'rs',
+        'Kotlin': 'kt',
+        'Scala': 'scala',
+        'TypeScript': 'ts',
+        'PHP': 'php',
+        'SQL': 'sql',
+        'R': 'r',
     };
     return langMap[language] || "txt";
 }

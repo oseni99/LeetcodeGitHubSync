@@ -87,10 +87,15 @@ function updateSyncStatus(status) {
 function updateLastSyncTime() {
     const now = new Date().toISOString();
     chrome.storage.sync.set({ lastSyncTime: now }, () => {
-        // // console.log(`Last sync time updated to: ${now}`);
+        // Once saved, immediately update the UI.
+        const lastSyncElement = document.querySelector(".last-sync");
+        if (lastSyncElement) {
+            const date = new Date(now);
+            const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            lastSyncElement.textContent = `Last Sync: ${formattedTime}`;
+        }
     });
 }
-
 /** 
  * @param {string} owner - Github repo owner
  * @param {string} repo -  Github repo name

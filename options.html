@@ -11,36 +11,46 @@
     />
   </head>
   <body>
-    <h2>Configuration Settings</h2>
-    <form id="config-form">
-      <!-- GitHub Repository URL Input -->
-      <label for="repo-url">GitHub Repository URL:</label>
-      <input
-        type="text"
-        id="repo-url"
-        name="repo-url"
-        required
-        placeholder="https://github.com/username/repository"
-      />
+    <main class="page-shell">
+      <section class="settings-card">
+        <p class="eyebrow">Configuration</p>
+        <h1>GitHub Settings</h1>
+        <p class="intro">
+          Save the repository and token used for syncing submissions.
+        </p>
 
-      <!-- GitHub Personal Access Token Input -->
-      <label for="github-token">GitHub Personal Access Token:</label>
-      <input
-        type="password"
-        id="github-token"
-        name="github-token"
-        required
-        placeholder="ghp_YourPersonalAccessToken"
-      />
+        <form id="config-form">
+          <div class="field-group">
+            <label for="repo-url">GitHub Repository URL</label>
+            <input
+              type="text"
+              id="repo-url"
+              name="repo-url"
+              required
+              autocomplete="url"
+              placeholder="https://github.com/username/repository"
+            />
+          </div>
 
-      <!-- Save Button -->
-      <button type="submit">Save</button>
-    </form>
+          <div class="field-group">
+            <label for="github-token">GitHub Personal Access Token</label>
+            <input
+              type="password"
+              id="github-token"
+              name="github-token"
+              required
+              autocomplete="current-password"
+              placeholder="ghp_YourPersonalAccessToken"
+            />
+          </div>
 
-    <!-- Status Message Display -->
-    <div id="status"></div>
+          <button type="submit">Save</button>
+        </form>
 
-    <!-- Linking to the Options JavaScript -->
+        <div id="status" role="status" aria-live="polite"></div>
+      </section>
+    </main>
+
     <script src="options.js"></script>
   </body>
 </html>

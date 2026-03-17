@@ -10,56 +10,178 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --page-bg: #f7f8f6;
+  --card-bg: #ffffff;
+  --card-border: #d8e3da;
+  --text-strong: #1b2a1d;
+  --text-muted: #5b6c5f;
+  --accent: #25784a;
+  --accent-dark: #1b5f38;
+  --accent-soft: #e8f4ec;
+  --accent-ring: rgba(37, 120, 74, 0.18);
+  --error-bg: #fbebee;
+  --error-border: #efc4cc;
+  --error-text: #9a2336;
+}
+
 body {
-  font-size: 1.2rem;
+  font-size: 16px;
   font-family: "Bai Jamjuree", sans-serif;
   min-height: 100vh;
-  background-color: white;
-  margin: 20px;
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text-strong);
+  width: 320px;
 }
-h2 {
-  text-align: center;
+
+.page-shell {
+  min-height: 100vh;
+  padding: 18px 14px 20px;
+  width: 100%;
+}
+
+.settings-card {
+  width: 100%;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  background: var(--card-bg);
+  box-shadow: 0 10px 28px rgba(27, 42, 29, 0.08);
+}
+
+.settings-card::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 5px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) 0%, #7ab58f 100%);
+}
+
+.eyebrow {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 1.8rem;
+  line-height: 1.1;
+}
+
+.intro {
+  margin: 10px 0 20px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: 18px;
+}
+
+.field-group {
+  display: grid;
+  gap: 7px;
 }
 
 label {
-  margin-top: 10px;
+  font-size: 0.96rem;
+  font-weight: 600;
 }
 
 input {
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 100%;
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid #c9d3c7;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text-strong);
+  font: inherit;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+input::placeholder {
+  color: #8b968e;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-ring);
 }
 
 button {
-  margin-top: 15px;
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
+  margin-top: 2px;
+  padding: 13px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent) 0%, #2f9356 100%);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 14px 28px rgba(37, 120, 74, 0.18);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
 }
 
 button:hover {
-  background-color: #218838;
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--accent-ring);
+  outline-offset: 3px;
 }
 
 #status {
-  margin-top: 10px;
-  height: 20px;
+  min-height: 42px;
+  margin-top: 14px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  color: transparent;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    padding 0.18s ease;
+}
+
+#status.success,
+#status.error {
+  padding: 11px 14px;
 }
 
 #status.success {
-  color: green;
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+  border-color: #c0d8c5;
 }
 
 #status.error {
-  color: red;
+  color: var(--error-text);
+  background: var(--error-bg);
+  border-color: var(--error-border);
 }

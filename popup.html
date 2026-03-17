@@ -2,6 +2,10 @@
 <html>
   <head>
     <link
+      href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
@@ -16,12 +20,21 @@
         </div>
       </div>
       <div class="card-content">
-        <div class="status-row">
-          <span class="status-label">GitHub Connection:</span>
-          <span class="status-value connected">
-            Connected
-            <i class="fas fa-check"></i>
-          </span>
+        <div class="status-card">
+          <div class="status-row">
+            <span class="status-label">Sync status</span>
+            <span class="status-value status-ready" id="sync-status">
+              <i class="fas fa-check-circle" id="sync-status-icon"></i>
+              <span id="sync-status-text">Ready</span>
+            </span>
+          </div>
+          <p class="status-detail" id="sync-status-detail">
+            Ready to sync submissions.
+          </p>
+          <div class="status-meta">
+            <span class="meta-label">Last sync</span>
+            <span class="last-sync" id="last-sync">Never synced</span>
+          </div>
         </div>
 
         <button class="btn btn-primary" id="sync-now">
@@ -29,17 +42,18 @@
           Sync Now
         </button>
 
-        <div class="last-sync">Last synced</div>
-
-        <button class="btn btn-secondary">
+        <button class="btn btn-secondary btn-quiet" id="open-settings" type="button">
           <i class="fas fa-cog"></i>
-          <span><a href="options.html">Settings</a></span>
+          <span>Settings</span>
         </button>
 
         <div class="repo-info">
-          <span id="repo-display">Syncing to: username/leetcode-solutions</span>
-          <br />
-          Branch: main
+          <p class="repo-label">Repository</p>
+          <p class="repo-value" id="repo-display">Not configured</p>
+          <p class="repo-meta">
+            <span class="repo-host">github.com</span>
+            <span class="repo-branch">Branch: <span>main</span></span>
+          </p>
         </div>
       </div>
     </div>

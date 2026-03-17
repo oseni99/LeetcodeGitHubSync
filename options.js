@@ -37,7 +37,7 @@ function restoreOptions() {
             document.getElementById("repo-url").value = items.repoUrl
         }
         if (items.githubToken) {
-            document.getElementById("github-token".value = items.githubToken)
+            document.getElementById("github-token").value = items.githubToken
         }
     })
 }
@@ -49,8 +49,9 @@ function restoreOptions() {
  */
 function displayStatus(message, type) {
     const statusDiv = document.getElementById("status");
+    const normalizedType = String(type).toLowerCase();
     statusDiv.textContent = message;
-    statusDiv.className = type;
+    statusDiv.className = normalizedType;
 
     setTimeout(() => {
         statusDiv.textContent = "";

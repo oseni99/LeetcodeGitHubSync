@@ -1,7 +1,4 @@
-// import { fetchLatestSubmission, getLastSyncedSubmissionId, processLatestSubmission } from "./common.js";
-
 const SUBMISSIONS_ENDPOINT = 'https://leetcode.com/api/submissions/';
-const FETCH_INTERVAL = 300000; // 5 minutes
 let isFetching = false
 /** 
  * Gets the Github Config saved in the chrome storage 
@@ -86,15 +83,7 @@ function updateSyncStatus(status) {
 
 function updateLastSyncTime() {
     const now = new Date().toISOString();
-    chrome.storage.sync.set({ lastSyncTime: now }, () => {
-        // Once saved, immediately update the UI.
-        const lastSyncElement = document.querySelector(".last-sync");
-        if (lastSyncElement) {
-            const date = new Date(now);
-            const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            lastSyncElement.textContent = `Last Sync: ${formattedTime}`;
-        }
-    });
+    chrome.storage.sync.set({ lastSyncTime: now });
 }
 /** 
  * @param {string} owner - Github repo owner
